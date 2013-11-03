@@ -1,3 +1,5 @@
+<%= render template: 'layouts/_header.html.erb' %>
+
 <h1>Ponds</h1>
 <% @ponds.each do |pond| %>
   <p><a href="/ponds/<%= pond.id %>"><%= pond.name %></a></p>

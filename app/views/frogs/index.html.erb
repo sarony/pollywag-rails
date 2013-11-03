@@ -1,3 +1,5 @@
+<%= render template: 'layouts/_header.html.erb' %>
+
 <h1>Frogs</h1>
 <% @frogs.each do |frog| %>
   <p><a href="/frogs/<%= frog.id %>"><%= frog.name %></a></p>

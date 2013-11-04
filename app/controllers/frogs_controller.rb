@@ -13,25 +13,18 @@ class FrogsController < ApplicationController
   def create
     @frog = Frog.new(frog_params)
 
-    if @frog.save
-      redirect_to @frog, notice: 'frog was successfully'
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @frog.save
+        format.html { redirect_to @frog, notice: 'frog was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @frog }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @frog.errors, status: :unprocessable_entity }
+      end
     end
-
-    # respond_to do |format|
-    #   if @frog.save
-    #     format.html { redirect_to @frog, notice: 'frog was successfully created.' }
-    #     format.json { render action: 'show', status: :created, location: @frog }
-    #   else
-    #     format.html { render action: 'new' }
-    #     format.json { render json: @frog.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   def show
-    # @ponds = Pond.all
     @frog = Frog.find_by(:id => params[:id])
   end
 
@@ -53,7 +46,6 @@ class FrogsController < ApplicationController
   end
 
   def destroy
-    # @frog = Frog.find_by(:id => params[:id])
     @frog.destroy
        respond_to do |format|
       format.html { redirect_to frogs_url }
@@ -62,7 +54,6 @@ class FrogsController < ApplicationController
   end
 
   private
-
       # Use callbacks to share common setup or constraints between actions.
     def set_frog
       @frog = Frog.find_by(id: params[:id])

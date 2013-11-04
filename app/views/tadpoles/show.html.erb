@@ -1,5 +1,3 @@
-<%= render template: 'layouts/_header.html.erb' %>
-
 
 <h1><%= @tadpole.name %> Tadpole</h1>
 
@@ -8,7 +6,7 @@
 <p>Lives: <a href="/ponds/<%= @tadpole.frog_id %>"><%= @tadpole.frog.pond.name %></a></p>
 <!-- <p><strong><a href="/tadpoles/<%= @tadpole.id %>/evolve">Evolve to frog</a></strong></p> -->
 
-<%= link_to 'Evolve', @tadpole.id.to_s, :controller => "tadpole", :method =>'evolve'%>
+<%= link_to 'Evolve', @tadpole, :controller => "tadpole", :action =>'evolve', :method => 'post' %>
 | 
 <a href="/tadpoles/<%= @tadpole.id %>/edit">Edit</a> | 
 

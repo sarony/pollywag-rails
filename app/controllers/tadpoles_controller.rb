@@ -6,7 +6,9 @@ before_action :set_tadpole, only: [:show, :edit, :update, :destroy, :evolve]
   end
 
   def new
-    @frog = Frog.find_by(:id => params[:id])
+    @frog = Frog.find_by(:id => params[:frog_id])
+    # raise params.inspect
+ 
     @tadpole = Tadpole.new
   end
 

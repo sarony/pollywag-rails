@@ -14,10 +14,14 @@ before_action :set_tadpole, only: [:show, :edit, :update, :destroy, :evolve]
     @frog = Frog.find_by(:id => params[:id])
     @tadpole = Tadpole.new(tadpole_params)
 
-    if @tadpole.save
-      redirect_to @tadpole, notice: 'tadpole was successfully'
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @tadpole.save
+        format.html { redirect_to @tadpole, notice: 'tadpole was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @tadpole }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @tadpole.errors, status: :unprocessable_entity }
+      end
     end
 
   end
@@ -54,7 +58,7 @@ before_action :set_tadpole, only: [:show, :edit, :update, :destroy, :evolve]
     @frog = Frog.new(@tadpole.attributes.reject{|k, v| k == "id" || k == "frog_id" || k == "tadpoles"})
     @frog.pond = @tadpole.frog.pond
     @tadpole.destroy
-        respond_to do |format|
+    respond_to do |format|
       if @frog.save
         format.html { redirect_to @frog, notice: 'your tadpole has evolved.' }
         format.json { head :no_content }

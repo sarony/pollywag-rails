@@ -11,11 +11,14 @@ class PondsController < ApplicationController
 
   def create
     @pond = Pond.new(pond_params)
-
-     if @pond.save
-      redirect_to @pond, notice: 'pond was successfully'
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @pond.save
+        format.html { redirect_to @pond, notice: 'pond was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @pond }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @pond.errors, status: :unprocessable_entity }
+      end
     end
   end
 

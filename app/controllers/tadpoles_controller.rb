@@ -1,5 +1,5 @@
 class TadpolesController < ApplicationController
-before_action :set_tadpole, only: [:show, :edit, :update, :destroy]
+before_action :set_tadpole, only: [:show, :edit, :update, :destroy, :evolve]
 
   def index
     @tadpoles = Tadpole.all
@@ -23,12 +23,10 @@ before_action :set_tadpole, only: [:show, :edit, :update, :destroy]
   end
 
   def show
-    @tadpole = Tadpole.find_by(:id => params[:id])
     @frog = Frog.find_by(:id => params[:id])
   end
 
   def edit
-    @tadpole = Tadpole.find_by(:id => params[:id])
     @ponds = Pond.all
   end
 
@@ -53,21 +51,18 @@ before_action :set_tadpole, only: [:show, :edit, :update, :destroy]
   end
 
   def evolve
-    @tadpole = Tadpole.find_by(:id => params[:id])
     @frog = Frog.new(@tadpole.attributes.reject{|k, v| k == "id" || k == "frog_id" || k == "tadpoles"})
     @frog.pond = @tadpole.frog.pond
-    @frog.save
     @tadpole.destroy
-    redirect_to @frog
-    #     respond_to do |format|
-    #   if @frog.save
-    #     format.html { redirect_to @frog, notice: 'frog was successfully updated.' }
-    #     format.json { head :no_content }
-    #   else
-    #     format.html { render action: 'edit' }
-    #     format.json { render json: @frog.errors, status: :unprocessable_entity }
-    #   end    
-    # end
+        respond_to do |format|
+      if @frog.save
+        format.html { redirect_to @frog, notice: 'your tadpole has evolved.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @frog.errors, status: :unprocessable_entity }
+      end    
+    end
   end
 
   private

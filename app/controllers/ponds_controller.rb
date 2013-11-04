@@ -20,11 +20,9 @@ class PondsController < ApplicationController
   end
 
   def show
-    @pond = Pond.find_by(:id => params[:id])
   end
 
   def edit
-    @pond = Pond.find_by(:id => params[:id])
   end
 
   def update
@@ -40,7 +38,6 @@ class PondsController < ApplicationController
   end
 
   def destroy
-    # @pond = Pond.find_by(:id => params[:id])
     @pond.destroy
     respond_to do |format|
       format.html { redirect_to ponds_url }

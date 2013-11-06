@@ -46,10 +46,11 @@ class FrogsController < ApplicationController
 
   def destroy
     @frog.destroy
-       respond_to do |format|
-      format.html { redirect_to frogs_url }
-      format.json { head :no_content }
-    end
+    redirect_to frogs_url
+    # respond_to do |format|
+    #   format.html { redirect_to frogs_url }
+    #   format.json { head :no_content }
+    # end
   end
 
   private
